@@ -168,6 +168,7 @@ def run_training_loop(checkpoint_path):
 
   num_steps_limit = outer_model_config["num_steps_limit"]
   best_metavalid_accuracy = 0.
+  t0 = time.time()
 
   with tf.train.MonitoredTrainingSession(
       checkpoint_dir=checkpoint_path,
@@ -183,8 +184,9 @@ def run_training_loop(checkpoint_path):
           # the best checkpoint for early stopping.
           metavalid_accuracy_ev = utils.evaluate_and_average(
               sess, metavalid_accuracy, 10)
-          tf.logging.info("Step: {} meta-valid accuracy: {}".format(
-              global_step_ev, metavalid_accuracy_ev))
+          tf.logging.info("Step: {} meta-valid accuracy: {} time elapse : {}".format(
+              global_step_ev, metavalid_accuracy_ev, time.time() - t0))
+          t0 = time.time()
 
           if metavalid_accuracy_ev > best_metavalid_accuracy:
             utils.copy_checkpoint(checkpoint_path, global_step_ev,
