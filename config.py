@@ -95,7 +95,8 @@ flags.DEFINE_float(
 
 def get_data_config():
   config = {}
-  config["data_path"] = FLAGS.data_path
+  config["data_path"] = '/g/g17/ordonez2/Projects/author_attribution/data'
+  # config["data_path"] = '/usr/workspace/wsb/ordonez2/author_attribution/data'
   config["dataset_name"] = FLAGS.dataset_name
   config["embedding_crop"] = FLAGS.embedding_crop
   config["train_on_val"] = FLAGS.train_on_val
