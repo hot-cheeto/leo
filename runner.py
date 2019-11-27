@@ -30,9 +30,14 @@ import config
 import data
 import model
 import utils
+import time 
+
+
+
+experiment_path = '/gsceph/ordonez2/author_attribution/meta_learning/experiments'
 
 FLAGS = flags.FLAGS
-flags.DEFINE_string("checkpoint_path", "/tmp/leo", "Path to restore from and "
+flags.DEFINE_string("checkpoint_path", "leo_miniimage_sanity", "Path to restore from and "
                     "save to checkpoints.")
 flags.DEFINE_integer(
     "checkpoint_steps", 1000, "The frequency, in number of "
@@ -153,6 +158,8 @@ def construct_graph(outer_model_config):
 
 
 def run_training_loop(checkpoint_path):
+
+  checkpoint_path = os.path.join(experiment_path, checkpoint_path)
   """Runs the training loop, either saving a checkpoint or evaluating it."""
   outer_model_config = config.get_outer_model_config()
   tf.logging.info("outer_model_config: {}".format(outer_model_config))
