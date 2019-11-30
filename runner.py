@@ -28,6 +28,7 @@ import tensorflow as tf
 
 import config
 import data
+# import data_text as data
 import model
 import utils
 import time 
@@ -115,6 +116,7 @@ def construct_graph(outer_model_config):
       outer_model_config["num_val_examples_per_class"])
   metatrain_loss, metatrain_accuracy = _construct_loss_and_accuracy(
       leo, metatrain_batch, True)
+
 
   metatrain_gradients, metatrain_variables = leo.grads_and_vars(metatrain_loss)
 

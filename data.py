@@ -71,7 +71,7 @@ class DataProvider(object):
   def __init__(self, dataset_split, config, verbose=False):
     self._dataset_split = MetaSplit(dataset_split)
     self._config = config
-    self._verbose = verbose
+    self._verbose = True
     self._check_config()
 
     self._index_data(self._load_data())
@@ -105,6 +105,8 @@ class DataProvider(object):
     if self._verbose:
       tf.logging.info(
           str([(k, np.shape(v)) for k, v in six.iteritems(raw_data)]))
+
+    import pdb; pdb.set_trace()
 
     return raw_data
 
@@ -220,11 +222,14 @@ class DataProvider(object):
                                   for class_paths in path_array])
       if self._verbose:
         tf.logging.info(embedding_array.shape)
+
       return embedding_array, label_array, path_array
 
+    import pdb; pdb.set_trace()
     output_list = tf.py_func(_build_one_instance_py, [],
                              [tf.float32, tf.int32, tf.string])
     instance_input, instance_output, instance_info = output_list
+    import pdb; pdb.set_trace()
     instance_input = tf.nn.l2_normalize(instance_input, axis=-1)
     instance_info = tf.regex_replace(instance_info, "\x00*", "")
 
@@ -246,6 +251,7 @@ class DataProvider(object):
                            tr_output, val_output)):
       tr_output = tf.identity(tr_output)
       val_output = tf.identity(val_output)
+
 
     return tr_input, tr_output, tr_info, val_input, val_output, val_info
 
