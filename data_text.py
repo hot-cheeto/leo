@@ -69,9 +69,9 @@ class DataProvider(object):
           if self.multi_topic:
               topic = random.choice(self._class_dict[author_name])
           else:
-              topic = self.classes_dict[author_name][0]
+              topic = self._class_dict[author_name][0]
 
-          emb = np.load(os.path.join(self.base_path, topic, '{}.np'.format(author_name)))
+          emb = np.load(os.path.join(self._base_path, topic, '{}.npy'.format(author_name)))
           idx = np.random.choice(emb.shape[0], nb_samples, replace = False)
           samples += [(i, e) for e in emb[idx]]
 
@@ -103,7 +103,7 @@ class DataProvider(object):
       idx = np.random.permutation(num_classes)
       labels = np.array(list(range(num_classes)))
       labels = labels[idx]
-      emb_labels = self.sample_emb(paths, labels, tr_size + val_size):
+      emb_labels = self.sample_emb(paths, labels, tr_size + val_size)
       
       labels, emb = list(zip(*emb_labels))
       labels, emb= np.array(list(labels)), np.array(list(emb))
@@ -183,13 +183,14 @@ class DataProvider(object):
     task_batch = tf.train.shuffle_batch(one_instance, batch_size=batch_size,
                                         capacity=1000, min_after_dequeue=0,
                                         enqueue_many=False,
-                                        shapes=[tr_data_size + (self.ndim,),
+                                        shapes=[tr_data_size + (self._ndim,),
                                                 tr_data_size + (1,),
                                                 (num_classes,),
-                                                val_data_size + (self.ndim,),
+                                                val_data_size + (self._ndim,),
                                                 val_data_size + (1,),
                                                 (num_classes,)],
                                         num_threads=num_threads)
+
 
 
     return ProblemInstance(*task_batch)

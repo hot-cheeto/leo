@@ -33,6 +33,17 @@ flags.DEFINE_string(
 flags.DEFINE_boolean("train_on_val", False, "Whether to train on the "
                      "validation data.")
 
+flags.DEFINE_boolean("multi_topic", False, "Whether to train on the "
+                     "validation data.")
+flags.DEFINE_integer(
+    "ndim", 512, "Number of unroll steps in the "
+    "inner loop of leo (number of adaptation steps in the "
+    "latent space).")
+flags.DEFINE_integer(
+    "splitname", 100, "Number of unroll steps in the "
+    "inner loop of leo (number of adaptation steps in the "
+    "latent space).")
+
 flags.DEFINE_integer(
     "inner_unroll_length", 5, "Number of unroll steps in the "
     "inner loop of leo (number of adaptation steps in the "
@@ -95,11 +106,14 @@ flags.DEFINE_float(
 
 def get_data_config():
   config = {}
-  config["data_path"] = '/gsceph/ordonez2/author_attribution/meta_learning/data'
+  config["data_path"] = '/Users/ordonez2/Desktop/Stanford/CS330/final_project/data' 
   config["dataset_name"] = FLAGS.dataset_name
   config["embedding_crop"] = FLAGS.embedding_crop
   config["train_on_val"] = FLAGS.train_on_val
   config["total_examples_per_class"] = 600
+  config["splitname"] = FLAGS.splitname
+  config["ndim"] = FLAGS.ndim
+  config["multi_topic"] = FLAGS.multi_topic
   return config
 
 
